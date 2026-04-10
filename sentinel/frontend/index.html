@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="SENTINEL — AI-powered detection of manipulative digital content. Identify psychological manipulation, disinformation tactics, and coordinated influence operations.">
+    <title>SENTINEL — AI for Detecting Manipulative Digital Content</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <!-- ─── NAVIGATION ──────────────────────────────────── -->
+    <nav id="main-nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo" id="nav-logo">
+                <svg class="shield-icon" width="22" height="26" viewBox="0 0 22 26" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11 1L1 5.5V12C1 18.35 5.26 24.22 11 25.5C16.74 24.22 21 18.35 21 12V5.5L11 1Z"
+                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M7.5 13L10 15.5L15 10.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                <span class="logo-text">SENTINEL</span>
+            </a>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" data-section="analyze" id="nav-analyze">Analyze</a>
+                <a href="#" class="nav-link" data-section="history" id="nav-history">History</a>
+                <a href="#" class="nav-link" data-section="about" id="nav-about">About</a>
+            </div>
+            <div class="nav-status" id="nav-status">
+                <span class="live-dot"></span>
+                <span class="live-label">Live</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ─── HERO SECTION ────────────────────────────────── -->
+    <main>
+        <section id="section-analyze" class="section active">
+            <div class="hero">
+                <h1 class="hero-headline">See through the noise.</h1>
+                <p class="hero-sub">SENTINEL uses AI to detect psychological manipulation, disinformation tactics, and
+                    coordinated influence operations in any digital content.</p>
+            </div>
+
+            <!-- ─── INPUT AREA ──────────────────────────── -->
+            <div class="input-panel">
+                <div class="mode-toggle" id="mode-toggle">
+                    <button class="mode-btn active" data-mode="text" id="btn-mode-text">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M2 3h12M2 6.5h8M2 10h10M2 13.5h6" />
+                        </svg>
+                        Paste Text
+                    </button>
+                    <button class="mode-btn" data-mode="url" id="btn-mode-url">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
+                            <path d="M6.5 8.5a3.5 3.5 0 005 0l1.5-1.5a3.5 3.5 0 00-5-5L7 3" />
+                            <path d="M9.5 7.5a3.5 3.5 0 00-5 0L3 9a3.5 3.5 0 005 5l1-1" />
+                        </svg>
+                        Analyze URL
+                    </button>
+                </div>
+
+                <!-- Text Mode -->
+                <div class="input-mode" id="input-text-mode">
+                    <div class="textarea-wrap">
+                        <textarea id="input-textarea"
+                            placeholder="Paste any social media post, news headline, WhatsApp forward, article excerpt, or digital content here..."
+                            rows="6"></textarea>
+                        <span class="char-count" id="char-count">0</span>
+                    </div>
+                    <div class="sample-buttons">
+                        <span class="sample-label">Try a sample:</span>
+                        <button class="sample-btn" data-sample="fear" id="btn-sample-fear">Fear post</button>
+                        <button class="sample-btn" data-sample="consensus" id="btn-sample-consensus">Fake
+                            consensus</button>
+                        <button class="sample-btn" data-sample="clean" id="btn-sample-clean">Clean news</button>
+                    </div>
+                </div>
+
+                <!-- URL Mode -->
+                <div class="input-mode hidden" id="input-url-mode">
+                    <div class="url-wrap">
+                        <input type="url" id="input-url" placeholder="https://..." autocomplete="off" />
+                    </div>
+                    <p class="url-note">We scrape the article text, title, author and publish date — then analyze it for
+                        manipulation.</p>
+                </div>
+
+                <button class="analyze-btn" id="btn-analyze">
+                    <span class="analyze-btn-text" id="analyze-btn-text">Analyze</span>
+                    <span class="analyze-btn-loader hidden" id="analyze-btn-loader">
+                        <svg class="spinner" width="20" height="20" viewBox="0 0 20 20">
+                            <circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-dasharray="32" stroke-linecap="round" />
+                        </svg>
+                        Analyzing...
+                    </span>
+                    <span class="shortcut-hint">⌘ Enter</span>
+                </button>
+            </div>
+
+            <!-- ─── RESULTS PANEL ───────────────────────── -->
+            <div class="results-panel hidden" id="results-panel">
+                <!-- Risk Meter -->
+                <div class="result-card risk-meter-card" id="risk-meter-card">
+                    <div class="risk-meter-top">
+                        <div class="risk-score-display">
+                            <span class="risk-score-number" id="risk-score-number">0</span>
+                            <span class="risk-score-label">/ 100</span>
+                        </div>
+                        <div class="risk-meta">
+                            <span class="risk-badge" id="risk-badge">LOW</span>
+                            <p class="risk-verdict" id="risk-verdict"></p>
+                        </div>
+                    </div>
+                    <div class="risk-bar-track">
+                        <div class="risk-bar-fill" id="risk-bar-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Source Metadata (URL only) -->
+                <div class="result-card metadata-card hidden" id="metadata-card">
+                    <h3 class="result-card-title">Source Metadata</h3>
+                    <div class="metadata-strip" id="metadata-strip"></div>
+                </div>
+
+                <!-- Techniques Detected -->
+                <div class="result-card" id="techniques-card">
+                    <h3 class="result-card-title">Techniques Detected</h3>
+                    <div class="techniques-grid" id="techniques-grid"></div>
+                </div>
+
+                <!-- Psychological Profile -->
+                <div class="result-card" id="psych-card">
+                    <h3 class="result-card-title">Psychological Profile</h3>
+                    <div class="callout-card" id="psych-content"></div>
+                </div>
+
+                <!-- Recommended Action -->
+                <div class="result-card" id="action-card">
+                    <h3 class="result-card-title">Recommended Action</h3>
+                    <div class="action-card-inner" id="action-content"></div>
+                </div>
+
+                <!-- Summary -->
+                <div class="result-card" id="summary-card">
+                    <h3 class="result-card-title">SENTINEL Summary</h3>
+                    <blockquote class="sentinel-summary" id="summary-content"></blockquote>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── HISTORY SECTION ─────────────────────────── -->
+        <section id="section-history" class="section hidden">
+            <div class="section-header">
+                <h2 class="section-title">Analysis History</h2>
+                <p class="section-sub">Recent analyses from this session</p>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats-bar" id="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-total">0</span>
+                    <span class="stat-label">Total Analyzed</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-avg">0</span>
+                    <span class="stat-label">Avg Risk Score</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-high">0</span>
+                    <span class="stat-label">High Risk</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-technique">N/A</span>
+                    <span class="stat-label">Top Technique</span>
+                </div>
+            </div>
+
+            <!-- History Table -->
+            <div class="history-table-wrap" id="history-table-wrap">
+                <div class="history-empty" id="history-empty">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#ccc" stroke-width="1.5">
+                        <circle cx="24" cy="24" r="20" />
+                        <path d="M24 14v10l7 7" />
+                    </svg>
+                    <p>No analyses yet. Go to <a href="#" data-section="analyze" class="nav-link-inline">Analyze</a> to
+                        get started.</p>
+                </div>
+                <table class="history-table hidden" id="history-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Preview</th>
+                            <th>Type</th>
+                            <th>Score</th>
+                            <th>Risk</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-tbody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ─── ABOUT SECTION ───────────────────────────── -->
+        <section id="section-about" class="section hidden">
+            <div class="section-header">
+                <h2 class="section-title">About SENTINEL</h2>
+                <p class="section-sub">Understanding the threat landscape</p>
+            </div>
+
+            <div class="about-content">
+                <div class="about-intro">
+                    <p>SENTINEL is an AI-powered analysis tool designed to detect psychological manipulation,
+                        coordinated influence operations, and disinformation campaigns in digital content. It produces
+                        structured Manipulation Intelligence Reports that identify specific techniques being used, who
+                        is being targeted, and what action readers should take.</p>
+                    <p>Built for the <strong>bots.in Hackathon</strong>, SENTINEL addresses one of the most pressing
+                        challenges of the digital age: the weaponization of information to manipulate public opinion,
+                        exploit vulnerable populations, and undermine trust in institutions.</p>
+                </div>
+
+                <h3 class="about-section-title">Manipulation Techniques We Detect</h3>
+                <div class="techniques-reference-grid">
+                    <div class="tech-ref-card">
+                        <div class="tech-ref-icon">⚠️</div>
+                        <h4>Fear Appeals</h4>
+                        <p>Using exaggerated threats to override rational thinking and provoke panic-driven action.</p>
+                    </div>
+                    <div class="tech-ref-card">
+                        <div class="tech-ref-icon">⏰</div>
+                        <h4>False Urgency</h4>
+                        <p>Creating artificial time pressure to prevent careful evaluation of claims.</p>
+                    </div>
+                    <div class="tech-ref-card">
+                        <div class="tech-ref-icon">😡</div>
+                        <h4>Emotional Hijacking</h4>
+                        <p>Triggering outrage, disgust, or fear to bypass critical thinking.</p>
+                    </div>
+                    <div class="tech-ref-card">
+                        <div class="tech-ref-icon">👥</div>
+                        <h4>Fake Consensus</h4>
+                        <p>Manufacturing the appearance of widespread agreement to pressure conformity.</p>
+                    </div>
+                    <div class="tech-ref-card">
+                        <div class="tech-ref-icon">🌱</div>
+                        <h4>Astroturfing</h4>
+                        <p>Disguising coordinated campaigns as organic grassroots movements.</p>
+                    </div>
+                    <div class="tech-ref-card">
+                        <div class="tech-ref-icon">❌</div>
+                        <h4>Disinformation</h4>
+                        <p>Deliberately spreading false or misleading information to deceive.</p>
+                    </div>
+                    <div class="tech-ref-card">
+                        <div class="tech-ref-icon">⚔️</div>
+                        <h4>Identity Targeting</h4>
+                        <p>Exploiting in-group/out-group dynamics to divide and polarize.</p>
+                    </div>
+                    <div class="tech-ref-card">
+                        <div class="tech-ref-icon">🎭</div>
+                        <h4>Authority Spoofing</h4>
+                        <p>Impersonating credible sources to lend false legitimacy.</p>
+                    </div>
+                    <div class="tech-ref-card">
+                        <div class="tech-ref-icon">🔄</div>
+                        <h4>DARVO</h4>
+                        <p>Deny, Attack, Reverse Victim and Offender — a gaslighting technique.</p>
+                    </div>
+                    <div class="tech-ref-card">
+                        <div class="tech-ref-icon">🐕</div>
+                        <h4>Dog Whistles</h4>
+                        <p>Using coded language that signals specific meaning to target audiences.</p>
+                    </div>
+                    <div class="tech-ref-card">
+                        <div class="tech-ref-icon">📈</div>
+                        <h4>Manufactured Virality</h4>
+                        <p>Using bots, paid networks, or coordination to fake organic spread.</p>
+                    </div>
+                    <div class="tech-ref-card">
+                        <div class="tech-ref-icon">🤖</div>
+                        <h4>Synthetic Media</h4>
+                        <p>Deepfakes and AI-generated content designed to deceive viewers.</p>
+                    </div>
+                </div>
+
+                <div class="about-footer">
+                    <p> <strong></strong> </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+
+</html>
